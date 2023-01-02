@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="pokemon.css">
+    <script src="pokemon.js" defer></script>
+
+    <title>Document</title>
+</head>
+<body>
+    
+<div class="wrapper">
+    <form id="search-form">
+        <label for="search-input" id = 'SearchBar'>Search:</label>
+        <input type="text" id="SearchInput" name="search">
+        <button type="button" id = 'SearchButton'>Go</button>
+        <button type="button" id = 'FilterButton'>Filter</button>
+    </form>
+</div>
+
+
+    <div >
+        <table id = 'tablediv'>
+            <tbody id = 'tbody'>
+            <tr id="row">
+                <th>Pokemon</th>
+                <th>Url</th>
+            </tr>
+            <tr id = 'rows'></tr>
+        </tbody>
+        </table>
+    </div>
+</div>
+    
+
+</body>
+</html>
