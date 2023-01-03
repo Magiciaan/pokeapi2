@@ -1,39 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="pokemon.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="pokemon.css" />
     <script src="pokemon.js" defer></script>
+    <link rel="icon" href="https://i.ibb.co/4s8Kkvq/hehe.jpg" />
+    <title>Poke Index</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="searchBar">
+        <input name="search" id="search" placeholder="Find your pokemon :)"
+        type="text"/ >
+        <button id="SearchButton" type="button">Find Pokemon</button>
+      </div>
 
-    <title>Document</title>
-</head>
-<body>
-    
-<div class="wrapper">
-    <form id="search-form">
-        <label for="search-input" id = 'SearchBar'>Search:</label>
-        <input type="text" id="SearchInput" name="search">
-        <button type="button" id = 'SearchButton'>Go</button>
-        <button type="button" id = 'FilterButton'>Filter</button>
-    </form>
-</div>
-
-
-    <div >
-        <table id = 'tablediv'>
-            <tbody id = 'tbody'>
-            <tr id="row">
-                <th>Pokemon</th>
-                <th>Url</th>
+      <div>
+        <table id="tableID">
+          <thead>
+            <tr>
+              <th width="150px">Pokemon ID</th>
+              <th width="150px">Pokemon Name</th>
+              <th width="250px">Poke Picture</th>
+              <th width="350px">URL</th>
             </tr>
-            <tr id = 'rows'></tr>
-        </tbody>
-        </table>
-    </div>
-</div>
-    
+          </thead>
 
-</body>
+          <tbody>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
 </html>

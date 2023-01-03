@@ -1,75 +1,81 @@
-const tablerow = document.getElementById("rows");
-const allrows = document.getElementsByTagName('tr')
-const table = document.getElementById("tablediv");
-const SearchBar = document.getElementById("SearchInput");
-
+const SearchBar = document.getElementById("search");
+const SearchButton = document
+  .getElementById("SearchButton")
+  .addEventListener("click", getPokes);
 const FilterButton = document.getElementById("FilterButton");
-const SearchButton = document.getElementById("SearchButton");
+const Table = document
+  .getElementById("tableID")
+  .getElementsByTagName("tbody")[0];
 
-var allarray;
-var allnames = [];
-var allurls = [];
-var names = [];
-
-async function fetchAndDisplayData() {
+const fetchAndDisplayData = async () => {
   try {
-    SearchBar.addEventListener("input", SearchFunc);
-    FilterButton.addEventListener("click", filtering);
-    const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=50");
+    const response = await fetch(
+      "https://pokeapi.co/api/v2/pokemon?limit=50&offset=0"
+    );
     const data = await response.json();
-    allarray = data.results;
-    let b = 0;
-    while (b <= allarray.length) {
-      names.push(allarray[b].name);
-      allurls.push(allarray[b].url);
-      const newRow = table.insertRow(-1);
-      let newCell1 = newRow.insertCell(-1);
-      let newCell2 = newRow.insertCell(0);
-      newCell1.innerHTML = allurls.pop();
-      newCell2.innerHTML = names.pop();
-      b++;
-    }
-    console.log(allarray)
+    const pokemonData = data?.results;
 
-    function filtering() {
-      let sortednames = [];
-      for (let c = 0; allarray.length >= c; c++) {
-        allnames.push(allarray[c].name);
-        allurls.push(allarray[c].url);
-        const newRow = table.insertRow(1);
-        let newCell1 = newRow.insertCell(0);
-        let newCell2 = newRow.insertCell(1);
-        newCell1.innerHTML = sortednames[c];
-        newCell2.innerHTML = allurls[c];
-        sortednames = allnames.sort();
-        console.log(allnames)
-      }
+    pokemonData.forEach((item, index) => {
+      let newRow = Table.insertRow();
 
-    }
-    function SearchFunc() {
-      let d = 0;   
-      while (allarray.length > d) {
-        let allnamecaps = allarray[d].name.toUpperCase();
-        let pokeies = allnamecaps.startsWith(SearchBar.value.toUpperCase());
-        i=0
-        if (pokeies === true) {
-          i++
-          const newRow = table.insertRow(1);
-          let newCell1 = newRow.insertCell(-1);
-          let newCell2 = newRow.insertCell(0);
-          newCell1.innerHTML = allarray[d].url;
-          newCell2.innerHTML = allnamecaps.toLowerCase();
-        }
-        d++;
-        let loop2 = 0
-        loop2 = loop2+i
-        console.log(loop2.length)
-        // while (loop2<=allarray.length){
-        // allrows[i].remove()}
-      }
-    }
+      // Insert a cell at the end of the row
+      let newCell = newRow.insertCell();
+      let newCell2 = newRow.insertCell();
+      let newCell3 = newRow.insertCell();
+      let newCell4 = newRow.insertCell();
+      var img = document.createElement("img");
+      img.className = "imgclass";
+      img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/crystal/${
+        index + 1
+      }.png`;
+
+      // Append a text node to the cell
+      let pokeId = document.createTextNode(`${index + 1}`);
+      let pokeName = document.createTextNode(`${item.name}`);
+      let pokeUrl = document.createTextNode(`${item.url}`);
+      newRow.className = "rowss";
+      // add pokemon id
+      newCell.appendChild(pokeId);
+      newCell2.appendChild(pokeName);
+      newCell3.appendChild(img);
+      newCell4.appendChild(pokeUrl);
+    });
+
+    return pokemonData;
   } catch (error) {
     console.error(error);
   }
+};
+
+const myData = fetchAndDisplayData();
+// console.log(myData.then((item) => (item[index+1].name)))// myData.then((item) => (item[c].name))
+let total = 0;
+async function getArray() {
+  const array = await myData;
+  total = total + array.length;
 }
-fetchAndDisplayData();
+getArray();
+
+function getPokes() {
+  fetchAndDisplayData();
+}
+SearchBar.addEventListener("input", searchPokemons);
+async function searchPokemons() {
+  const allrows = document.querySelectorAll(".rowss");
+  const array = await myData;
+  // console.log(array); // Output: Array(50)
+  total = 0;
+  total = total + array.length;
+  const searchdata = SearchBar.value.toLowerCase();
+  console.log(array);
+
+  for (let j = 0; total >= j; j++) {
+    if (array[j].name.startsWith(searchdata)) {
+      allrows[j].style.display = "";
+    } 
+    else {
+      allrows[j].style.display = "none";
+    }
+  }
+
+}
