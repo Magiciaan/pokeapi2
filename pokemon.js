@@ -6,6 +6,7 @@ const FilterButton = document.getElementById("FilterButton");
 const Table = document
   .getElementById("tableID")
   .getElementsByTagName("tbody")[0];
+const SortButton = document.getElementById("sortingbutt");
 
 const fetchAndDisplayData = async () => {
   try {
@@ -14,13 +15,13 @@ const fetchAndDisplayData = async () => {
     );
     const data = await response.json();
     const pokemonData = data?.results;
-
     pokemonData.forEach((item, index) => {
       let newRow = Table.insertRow();
 
       // Insert a cell at the end of the row
       let newCell = newRow.insertCell();
       let newCell2 = newRow.insertCell();
+      newCell2.className = "rownames";
       let newCell3 = newRow.insertCell();
       let newCell4 = newRow.insertCell();
       var img = document.createElement("img");
@@ -40,7 +41,6 @@ const fetchAndDisplayData = async () => {
       newCell3.appendChild(img);
       newCell4.appendChild(pokeUrl);
     });
-
     return pokemonData;
   } catch (error) {
     console.error(error);
@@ -48,13 +48,14 @@ const fetchAndDisplayData = async () => {
 };
 
 const myData = fetchAndDisplayData();
+
 // console.log(myData.then((item) => (item[index+1].name)))// myData.then((item) => (item[c].name))
 let total = 0;
 async function getArray() {
   const array = await myData;
   total = total + array.length;
+  return total;
 }
-getArray();
 
 function getPokes() {
   fetchAndDisplayData();
@@ -72,10 +73,32 @@ async function searchPokemons() {
   for (let j = 0; total >= j; j++) {
     if (array[j].name.startsWith(searchdata)) {
       allrows[j].style.display = "";
-    } 
-    else {
+    } else {
       allrows[j].style.display = "none";
     }
   }
-
+}
+SortButton.addEventListener("click", () => {
+  sorting(1);
+});
+function sorting(colIndex) {
+  let rows = Table.getElementsByTagName("tr");
+  let rowArray = [];
+  for (let i = 0; i < rows.length; i++) {
+    rowArray.push(rows[i]);
+  }
+  rowArray.sort(function (a, b) {
+    let A = a.getElementsByTagName("TD")[colIndex].textContent;
+    let B = b.getElementsByTagName("TD")[colIndex].textContent;
+    if (A < B) {
+      return -1;
+    }
+    if (A > B) {
+      return 1;
+    }
+    return 0;
+  });
+  for (let i = 0; i < rowArray.length; i++) {
+    Table.appendChild(rowArray[i]);
+  }
 }

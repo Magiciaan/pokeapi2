@@ -72,3 +72,7 @@ th {
   border-radius: 1.5rem;
   width: 20%;
 }
+#sortingbutt:hover{
+  color: var(--def);
+	transition-delay: .1s;
+}
