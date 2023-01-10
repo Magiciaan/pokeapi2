@@ -1,0 +1,31 @@
+async function firstfetch() {
+  try {
+    let vyavya = []
+    const allfetchingdata = await fetch(
+      "https://pokeapi.co/api/v2/pokemon?limit=5"
+    );
+    const resp = await allfetchingdata.json();
+    constallurls = [];
+    for (let i = 0; i < 5; i++) {
+      let urls = resp.results[i].url;
+      constallurls.push(urls);
+    }
+    constallurls.forEach((random)=>{
+        vyavya.push(fetch(random))
+    })
+    Promise.all(vyavya)
+      .then((response) => {
+        return Promise.all(response.map((r) => r.json()));
+      })
+      .then((data) => {
+        data.forEach((item) => {
+          console.log(item.name);
+        });
+      });
+    
+  } catch (err) {
+    console.error(err);
+  }
+}
+firstfetch();
+
